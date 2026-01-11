@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>يحيى جيزان اليازلي | لاعب كرة قدم</title>
+  <!-- Favicons: SVG used if supported; add favicon.ico in project root as fallback -->
+  <link rel="icon" href="1.png" type="image/svg+xml">
+  <link rel="alternate icon" href="1.png" type="image/x-icon">
+  <link rel="apple-touch-icon" href="1.png">
+  <meta name="description" content="الموقع الرسمي للاعب كرة القدم يحيى جيزان اليازلي - عمره 14 سنة. مهارات، إنجازات وتواصل." />
+  <meta name="theme-color" content="#0c1022" />
+  <style>
+    :root {
+      --bg: #0b0f1f;
+      --card: rgba(255,255,255,0.08);
+      --glass: rgba(255,255,255,0.12);
+      --border: rgba(255,255,255,0.12);
+      --text: #f5f7ff;
+      --muted: #b9c0ff;
+      --primary: #5c7cff;
+      --accent: #9c5cff;
+      --success: #4ad493;
+      --warning: #ffd46b;
+      --danger: #ff7c9c;
+      --shadow: 0 10px 40px rgba(0,0,0,0.35);
+      --radius-1: 16px;
+      --radius-2: 24px;
+      --radius-3: 36px;
+      --blur: saturate(140%) blur(12px);
+    }
+
+    /* Timeline (Goals) */
+.timeline {
+  display: grid;
+  gap: 14px;
+}
+.timeline-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.time {
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+  text-align: center;
+  font-weight: 700;
+}
+.event {
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+}
+.event h4 { margin: 0 0 6px; }
+
+/* Skills (Values) */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 14px;
+}
+.skill {
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+}
+.skill-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.bar {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+.bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  width: 0%;
+  transition: width 1.4s cubic-bezier(.2,.9,.3,1);
+}
+
+
+    /* Reset & base */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Cairo", system-ui, -apple-system, "Segoe UI", "Noto Naskh Arabic", sans-serif;
+      color: var(--text);
+      background: radial-gradient(1200px 700px at 85% 10%, rgba(92,124,255,0.25) 0%, transparent 60%),
+                  radial-gradient(800px 500px at 20% 85%, rgba(156,92,255,0.25) 0%, transparent 60%),
+                  linear-gradient(180deg, #070a16 0%, #0b0f1f 60%, #0c1022 100%);
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* Ambient animated blobs */
+    .blob {
+      position: fixed;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: -1;
+      mix-blend-mode: screen;
+      animation: float 22s ease-in-out infinite;
+    }
+    .blob.b1 { background: radial-gradient(circle, #5c7cff 0%, transparent 60%); top: -120px; left: -120px; }
+    .blob.b2 { background: radial-gradient(circle, #9c5cff 0%, transparent 60%); bottom: -120px; right: -100px; animation-delay: 8s; }
+    .blob.b3 { background: radial-gradient(circle, #4ad493 0%, transparent 60%); top: 40%; right: 30%; animation-delay: 14s; }
+    @keyframes float {
+      0%,100% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(0,-25px,0) scale(1.05); }
+    }
+
+    /* Navbar */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: var(--blur);
+      background: linear-gradient(180deg, rgba(12,16,34,0.8), rgba(12,16,34,0.45));
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: 0.3px;
+    }
+    .brand-logo {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #5c7cff, #9c5cff);
+      box-shadow: 0 6px 18px rgba(92,124,255,0.35);
+      position: relative;
+    }
+    .brand-logo::after {
+      content: ""; position: absolute; inset: 0;
+      display: grid; place-items: center; color: #fff; font-weight: 900;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 20px;
+    }
+    .nav-links a {
+      padding: 10px 14px; border-radius: 10px;
+      transition: all 0.3s ease;
+      color: var(--muted);
+    }
+    .nav-links a:hover {
+      background: var(--glass);
+      color: var(--text);
+      box-shadow: inset 0 0 0 1px var(--border);
+    }
+    .cta {
+      padding: 10px 16px; border-radius: 12px;
+      background: linear-gradient(120deg, var(--primary), var(--accent));
+      box-shadow: 0 8px 24px rgba(92,124,255,0.35);
+      color: #fff; font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(92,124,255,0.45); }
+
+    /* Burger */
+    .burger {
+      display: none; width: 44px; height: 44px;
+      border-radius: 12px; border: 1px solid var(--border);
+      background: var(--card); backdrop-filter: var(--blur);
+      align-items: center; justify-content: center; gap: 6px; flex-direction: column;
+      cursor: pointer; transition: 0.3s ease;
+    }
+    .burger:hover { background: var(--glass); }
+    .line { width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: 0.3s; }
+    .burger.active .line:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .burger.active .line:nth-child(2) { opacity: 0; }
+    .burger.active .line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-panel {
+      display: none;
+      position: fixed; inset: 64px 16px auto 16px;
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: var(--radius-2); backdrop-filter: var(--blur);
+      box-shadow: var(--shadow); z-index: 40; padding: 12px;
+    }
+    .mobile-panel a {
+      display: block; padding: 14px 12px; border-radius: 12px; color: var(--text);
+    }
+    .mobile-panel a:hover { background: var(--card); }
+    .mobile-panel.show { display: block; }
+
+    /* Hero */
+    .hero {
+      position: relative; padding: 70px 20px 40px; overflow: hidden;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px;
+    }
+    .card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-3);
+      backdrop-filter: var(--blur);
+      box-shadow: var(--shadow);
+    }
+    .hero-left { padding: 28px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 999px;
+      background: rgba(92,124,255,0.18);
+      color: #fff; border: 1px solid rgba(92,124,255,0.25);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .title {
+      margin: 16px 0 10px;
+      font-size: clamp(28px, 6vw, 46px);
+      line-height: 1.15; font-weight: 900;
+      background: linear-gradient(90deg, #fff, #c9d1ff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .subtitle { color: var(--muted); font-weight: 600; font-size: 18px; }
+
+    .hero-actions { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
+    .btn-soft {
+      padding: 10px 14px; border-radius: 12px; background: var(--card);
+      border: 1px solid var(--border); color: var(--text);
+      transition: 0.3s ease; font-weight: 700;
+    }
+    .btn-soft:hover { background: var(--glass); }
+
+    .stats {
+      margin-top: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    }
+    .stat {
+      padding: 14px; border-radius: 16px; background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border); text-align: center;
+    }
+    .stat .num { font-weight: 900; font-size: 22px; }
+    .stat .label { color: var(--muted); font-size: 14px; }
+
+    .hero-right { padding: 28px; display: grid; place-items: center; position: relative; }
+    .player-card {
+      position: relative; width: 100%; max-width: 440px; aspect-ratio: 3/4;
+      border-radius: 28px; overflow: hidden;
+      background:
+        radial-gradient(280px 220px at 65% 20%, rgba(92,124,255,0.5), transparent 40%),
+        radial-gradient(280px 220px at 35% 80%, rgba(156,92,255,0.5), transparent 40%),
+        linear-gradient(200deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid var(--border); box-shadow: var(--shadow);
+    }
+    .player-photo {
+      position: absolute; inset: 8px; border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
+        url('') center/cover no-repeat;
+      display: grid; place-items: center;
+    }
+    .player-photo .player-img {
+      position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px);
+      border-radius: 22px; object-fit: cover; display: block;
+    }
+    .avatar-fallback {
+      width: 56%; aspect-ratio: 1/1; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #5c7cff, #9c5cff);
+      display: grid; place-items: center; font-size: 64px; font-weight: 900;
+      box-shadow: 0 10px 30px rgba(92,124,255,0.4);
+    }
+    .badge {
+      position: absolute; bottom: 12px; left: 12px;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 10px 12px; display: inline-flex; gap: 10px; align-items: center;
+    }
+    .badge span { font-weight: 800; }
+    .badge .age { color: var(--warning); }
+    .badge .pos { color: var(--success); }
+
+    /* Sections */
+    section { padding: 60px 20px; }
+    .section-title {
+      font-size: clamp(22px, 4vw, 32px); font-weight: 900;
+      margin-bottom: 14px;
+      background: linear-gradient(90deg, #fff, #bcd0ff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .section-sub { color: var(--muted); margin-bottom: 24px; }
+
+    /* Highlights carousel */
+    .carousel {
+      display: grid; grid-auto-flow: column; grid-auto-columns: 70%;
+      gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 4px;
+    }
+    .carousel::-webkit-scrollbar { height: 8px; }
+    .carousel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 999px; }
+    .highlight {
+      scroll-snap-align: start; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border); background: var(--glass);
+    }
+    .highlight-media {
+      aspect-ratio: 16/9; background: linear-gradient(180deg, #1b2342, #151a33);
+      display: grid; place-items: center; color: var(--muted);
+    }
+    .highlight-body { padding: 14px; }
+    .highlight-body h4 { margin: 0 0 8px; }
+    .chip {
+      display: inline-flex; gap: 8px; align-items: center;
+      padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06); color: var(--muted); font-size: 13px;
+    }
+
+    /* Gallery */
+    .grid {
+      display: grid; gap: 16px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .col-8 { grid-column: span 8; }
+    .gallery-item {
+      position: relative; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border); background: var(--glass);
+      transform: translateZ(0);
+    }
+    .gallery-item .media {
+      aspect-ratio: 4/3; background: linear-gradient(180deg, #1a203b, #13182e);
+    }
+    .gallery-item:hover { transform: translateY(-2px); transition: transform 0.25s ease; }
+    .gallery-item .label {
+      position: absolute; bottom: 10px; right: 10px;
+      padding: 8px 12px; border-radius: 10px; background: rgba(0,0,0,0.5);
+      border: 1px solid var(--border); color: #fff; font-size: 13px;
+    }
+
+    /* Timeline */
+    .timeline { display: grid; gap: 14px; }
+    .timeline-item {
+      display: grid; grid-template-columns: 110px 1fr; gap: 14px;
+      align-items: start;
+    }
+    .time {
+      padding: 10px; border-radius: 12px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06); color: var(--muted); text-align: center; font-weight: 700;
+    }
+    .event {
+      padding: 12px; border-radius: 16px; border: 1px solid var(--border);
+      background: var(--glass);
+    }
+    .event h4 { margin: 0 0 6px; }
+
+    /* Skills bars */
+    .skills { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .skill {
+      padding: 12px; border-radius: 16px; border: 1px solid var(--border);
+      background: var(--glass);
+    }
+    .skill-label { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--muted); font-weight: 700; }
+    .bar {
+      height: 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.08); overflow: hidden;
+    }
+    .bar > span {
+      display: block; height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 0%;
+      transition: width 1.4s cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* Contact */
+    .contact {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .contact .card { padding: 16px; }
+    .form-row { display: grid; gap: 10px; margin-bottom: 12px; }
+    .input {
+      width: 100%; padding: 12px 14px; border-radius: 12px;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.06);
+      color: var(--text);
+    }
+    .input::placeholder { color: #9aa4d9; }
+    .send {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px;
+      background: linear-gradient(120deg, var(--primary), var(--accent));
+      color: #fff; border: none; cursor: pointer; font-weight: 800;
+      box-shadow: 0 10px 24px rgba(92,124,255,0.35);
+    }
+
+    /* Footer */
+    footer {
+      padding: 32px 20px; border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(12,16,34,0.5), rgba(12,16,34,0.8));
+      color: var(--muted);
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; gap: 14px; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(14px); transition: 0.6s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2,1fr); }
+      .skills { grid-template-columns: 1fr; }
+      .contact { grid-template-columns: 1fr; }
+      .carousel { grid-auto-columns: 85%; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .burger { display: flex; }
+      .carousel { grid-auto-columns: 92%; }
+      .grid { grid-template-columns: repeat(6,1fr); }
+      .col-8 { grid-column: span 6; }
+      .col-6 { grid-column: span 6; }
+      .col-4 { grid-column: span 6; }
+    }
+    @media (max-width: 480px) {
+      .title { font-size: 28px; }
+      .subtitle { font-size: 16px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .badge { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient blobs -->
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+    <!-- Navbar -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="brand-logo">
+          <!-- صورة يحيى بدل حرف Y -->
+          <img src="1.png" alt="شعار يحيى">
+        </div>
+        <span>يحيى جيزان اليازلي</span>
+      </div>
+      <div class="nav-links">
+        <a href="#about">عن يحيى</a>
+        <a href="#goals">الأهداف</a>
+        <a href="#values">القيم</a>
+        <a href="#timeline">المسيرة</a>
+        <a href="#skills">المهارات</a>
+        <a href="#contact">تواصل</a>
+      </div>
+      <div class="burger" id="burger"><span class="line"></span><span class="line"></span><span class="line"></span></div>
+      <div class="mobile-panel" id="mobilePanel">
+        <a href="#about">عن يحيى</a>
+        <a href="#goals">الأهداف</a>
+        <a href="#values">القيم</a>
+        <a href="#timeline">المسيرة</a>
+        <a href="#skills">المهارات</a>
+        <a href="#contact">تواصل</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="card hero-left reveal">
+        <span class="pill">🔥 موهبة صاعدة</span>
+        <h1 class="title">يحيى جيزان اليازلي</h1>
+        <p class="subtitle">لاعب كرة قدم بعمر 14 سنة، شغوف بالهجوم وصناعة الأهداف. أسلوبي يجمع السرعة، الذكاء، واللمسة الأخيرة الأنيقة.</p>
+        <div class="hero-actions">
+          <a href="#highlights" class="cta">شاهد اللقطات</a>
+          <a href="#contact" class="btn-soft">احجز تواصل</a>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="num" data-count="30">0</div>
+            <div class="label">أهداف الموسم</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="18">0</div>
+            <div class="label">تمريرات حاسمة</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="9.5">0</div>
+            <div class="label">متوسط تقييم</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="12">0</div>
+            <div class="label">مباريات متتالية</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card hero-right reveal">
+        <div class="player-card">
+          <div class="player-photo">
+            <!-- ضع صورة اللاعب هنا: استبدل "player.jpg" بمسار صورتك داخل المشروع -->
+            <img class="player-img" src="1.png" alt="صورة يحيى" />
+            <!-- عنصر بديل يظهر عندما لا تتوفر الصورة (مخفي افتراضياً) -->
+            <div class="avatar-fallback" aria-hidden="true" style="display:none">Y</div>
+          </div>
+          <div class="badge">
+            <span class="age">العمر: 14</span>
+            <span>•</span>
+            <span class="pos">المركز: مهاجم</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title reveal">عن يحيى</h2>
+      <p class="section-sub reveal">بدأت رحلتي في كرة القدم منذ الطفولة. أحب اللعب تحت الضغط، استغلال المساحات، والتواجد في المكان الصحيح بالوقت المناسب. هدفي أن أطور نفسي يوميًا وأن أكون قدوة في الأخلاق والاجتهاد.</p>
+    </div>
+  </section>
+
+  <!-- Goals -->
+<section id="goals">
+  <div class="container">
+    <h2 class="section-title reveal">الأهداف والطموحات</h2>
+    <p class="section-sub reveal">
+      أسعى لأن أكون لاعبًا محترفًا في أندية كبرى، وأن أطور مهاراتي يوميًا لأصل إلى أعلى المستويات.
+    </p>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="time">قصير المدى</div>
+        <div class="event">
+          <h4>تحسين اللياقة</h4>
+          <p>تطوير القوة البدنية والمهارات التكتيكية.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="time">متوسط المدى</div>
+        <div class="event">
+          <h4>أكاديمية دولية</h4>
+          <p>الانضمام إلى أكاديمية متخصصة لتطوير المستوى.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="time">طويل المدى</div>
+        <div class="event">
+          <h4>احتراف أوروبي</h4>
+          <p>اللعب في دوري أوروبي كبير وتمثيل المنتخب الوطني.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Gallery -->
+  <!-- Values -->
+<section id="values">
+  <div class="container">
+    <h2 class="section-title reveal">القيم والشخصية</h2>
+    <p class="section-sub reveal">
+      أؤمن أن النجاح لا يأتي فقط من المهارة، بل من الالتزام، الاحترام، والعمل الجماعي.
+    </p>
+    <div class="skills">
+      <div class="skill reveal">
+        <div class="skill-label"><span>الالتزام</span><span>100%</span></div>
+        <div class="bar"><span data-skill="100"></span></div>
+      </div>
+      <div class="skill reveal">
+        <div class="skill-label"><span>الروح الرياضية</span><span>95%</span></div>
+        <div class="bar"><span data-skill="95"></span></div>
+      </div>
+      <div class="skill reveal">
+        <div class="skill-label"><span>العمل الجماعي</span><span>90%</span></div>
+        <div class="bar"><span data-skill="90"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Timeline -->
+  <section id="timeline">
+    <div class="container">
+      <h2 class="section-title reveal">المسيرة</h2>
+      <p class="section-sub reveal">محطات مهمة شكلت أسلوبي وشخصيتي داخل وخارج الملعب.</p>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="time">2021</div>
+          <div class="event">
+            <h4>البداية في فريق المدرسة</h4>
+            <p>أول مشاركة رسمية وتسجيل أول هدف في مسابقة المدارس.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="time">2022</div>
+          <div class="event">
+            <h4>أفضل لاعب في دوري المدرسة.</h4>
+            <p>حصد لقب أفضل لاعب في المدرسة</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="time">2023</div>
+          <div class="event">
+            <h4>تطوير مهاراتي</h4>
+            <p>تطوير مكثف للمهارات البدنية والتكتيكية مع مدربين متخصصين.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="time">2024</div>
+          <div class="event">
+            <h4>قائد فريق الدوري في المدرسة .</h4>
+            <p>قيادة الفريق في عدة بطولات في المدرسة.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title reveal">المهارات</h2>
+      <p class="section-sub reveal">قيم تقديرية تتحدث عن أبرز نقاط القوة الحالية مع أهداف تطوير واضحة.</p>
+      <div class="skills">
+        <div class="skill reveal">
+          <div class="skill-label"><span>السرعة</span><span>90%</span></div>
+          <div class="bar"><span data-skill="90"></span></div>
+        </div>
+        <div class="skill reveal">
+          <div class="skill-label"><span>المراوغة</span><span>85%</span></div>
+          <div class="bar"><span data-skill="85"></span></div>
+        </div>
+        <div class="skill reveal">
+          <div class="skill-label"><span>الإنهاء</span><span>88%</span></div>
+          <div class="bar"><span data-skill="88"></span></div>
+        </div>
+        <div class="skill reveal">
+          <div class="skill-label"><span>الرؤية وصناعة اللعب</span><span>82%</span></div>
+          <div class="bar"><span data-skill="82"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title reveal">تواصل</h2>
+      <p class="section-sub reveal">للتواصل بخصوص تجارب، مباريات ودية، أو فرص تدريب—أرحب بكل تعاون يدعم تطويري.</p>
+      <div class="contact">
+        <div class="card reveal">
+          <form id="contactForm">
+            <div class="form-row">
+              <input class="input" type="text" name="name" placeholder="الاسم" required />
+              <input class="input" type="email" name="email" placeholder="البريد الإلكتروني" required />
+            </div>
+            <div class="form-row">
+              <input class="input" type="text" name="subject" placeholder="الموضوع" />
+            </div>
+            <div class="form-row">
+              <textarea class="input" name="message" rows="4" placeholder="رسالتك..." required></textarea>
+            </div>
+            <button type="submit" class="send">إرسال الرسالة</button>
+          </form>
+        </div>
+        <div class="card reveal">
+          <h4 style="margin-top:0">روابط اجتماعية</h4>
+          <p class="section-sub">تابع آخر المستجدات واللقطات عبر المنصات الاجتماعية.</p>
+          <div style="display:grid; gap:10px">
+            <a class="btn-soft" href="#" aria-label="سناب شات">سناب شات</a>
+            <a class="btn-soft" href="#" aria-label="إنستغرام">إنستغرام</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© 2026 يحيى جيزان اليازلي. جميع الحقوق محفوظة.</div>
+      <small></small>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Close mobile panel after navigation
+          mobilePanel.classList.remove('show');
+          burger.classList.remove('active');
+        }
+      });
+    });
+
+    // Burger menu
+    const burger = document.getElementById('burger');
+    const mobilePanel = document.getElementById('mobilePanel');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mobilePanel.classList.toggle('show');
+    });
+    document.addEventListener('click', (e) => {
+      const within = mobilePanel.contains(e.target) || burger.contains(e.target);
+      if (!within) {
+        mobilePanel.classList.remove('show');
+        burger.classList.remove('active');
+      }
+    });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          // Skill bars animate when visible
+          if (entry.target.classList.contains('skill')) {
+            const span = entry.target.querySelector('.bar > span');
+            const val = span.dataset.skill || 0;
+            requestAnimationFrame(() => { span.style.width = val + '%'; });
+          }
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Stats counters
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const numEl = entry.target;
+        const target = parseFloat(numEl.dataset.count || "0");
+        const duration = 1300;
+        const start = performance.now();
+        const fmt = (n) => (Math.round(n * 10) / 10).toString();
+        function tick(now) {
+          const p = Math.min((now - start) / duration, 1);
+          const val = target * (0.08 + 0.92 * p); // slight easing
+          numEl.textContent = target % 1 === 0 ? Math.round(val) : fmt(val);
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        statObserver.unobserve(numEl);
+      });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.stat .num').forEach(el => statObserver.observe(el));
+
+    // Contact form (demo only)
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      alert("تم إرسال رسالتك بنجاح!\\n\\n" +
+            "الاسم: " + (data.name || "—") + "\\n" +
+            "البريد: " + (data.email || "—") + "\\n" +
+            "الموضوع: " + (data.subject || "—") + "\\n" +
+            "الرسالة: " + (data.message || "—"));
+      form.reset();
+    });
+
+    // Subtle parallax for hero card
+    const playerCard = document.querySelector('.player-card');
+    if (playerCard) {
+      playerCard.addEventListener('mousemove', (e) => {
+        const r = playerCard.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        playerCard.style.transform = `perspective(800px) rotateY(${x * -6}deg) rotateX(${y * 6}deg) translateZ(0)`;
+      });
+      playerCard.addEventListener('mouseleave', () => {
+        playerCard.style.transform = 'none';
+      });
+    }
+  </script>
+</body>
+</html>
